@@ -1,0 +1,17 @@
+{
+  "name": "VisualMind XR: SURVIVE",
+  "short_name": "SURVIVE",
+  "description": "Disaster readiness simulator for everyone",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#05051a",
+  "theme_color": "#2196F3",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/2196F3/ffffff?text=S",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

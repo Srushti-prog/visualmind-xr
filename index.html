@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisualMind XR — Disaster Readiness Simulator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ═══ CINEMATIC INTRO ═══ -->
+<div id="intro-screen">
+  <div class="intro-logo">
+    <div class="intro-icon">🌊</div>
+    <div class="intro-title">VISUALMIND XR</div>
+    <div class="intro-bar"><div class="intro-fill"></div></div>
+    <div class="intro-text">Initializing Disaster Simulation Engine...</div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="app" style="display:none">
+
+  <!-- Particle background -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Nav -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <span class="nav-icon">🌊</span>
+      <span class="nav-brand">VisualMind <span class="nav-xr">XR</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="map.html" class="nav-link">🗺 Map</a>
+      <a href="debrief.html" class="nav-link">📚 Guide</a>
+      <a href="sim.html" class="nav-cta">Enter Sim</a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+
+    <!-- Live risk badge -->
+    <div class="live-badge" id="liveBadge">
+      <span class="live-dot"></span>
+      <span id="liveText">Detecting local risk...</span>
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="hero-title">
+      Protect Lives<br>
+      <span class="hero-gradient">Before Disaster Strikes</span>
+    </h1>
+
+    <p class="hero-sub">
+      Immersive XR disaster readiness training<br>
+      for communities worldwide.
+    </p>
+
+    <!-- Stats -->
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">200M+</div>
+        <div class="stat-lbl">Affected yearly</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">90s</div>
+        <div class="stat-lbl">Critical window</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Scenarios</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">Free</div>
+        <div class="stat-lbl">Always offline</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="hero-cta">
+      <a href="sim.html" class="btn-primary">
+        <span class="btn-icon">⚡</span>
+        <span>ENTER SIMULATION</span>
+        <span class="btn-arrow">→</span>
+      </a>
+      <a href="map.html" class="btn-secondary">
+        🗺 Community Map
+      </a>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="trust-badges">
+      <div class="badge">✅ NGO Ready</div>
+      <div class="badge">🥽 XR Ready</div>
+      <div class="badge">🌐 Browser Powered</div>
+      <div class="badge">♿ Accessible</div>
+      <div class="badge">🌍 Global Impact</div>
+    </div>
+
+  </section>
+
+  <!-- ═══ RISK PANEL ═══ -->
+  <section class="risk-section">
+    <div class="risk-card glass">
+      <div class="risk-header">
+        <div class="risk-label">📍 LIVE RISK ASSESSMENT</div>
+        <div class="risk-pulse"></div>
+      </div>
+      <div class="risk-city" id="cityName">Detecting location...</div>
+      <div class="risk-level" id="riskLevel">
+        ⏳ Analyzing local conditions...
+      </div>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill" id="riskBar" style="width:30%"></div>
+        </div>
+        <span class="risk-bar-label" id="riskBarLabel">LOW</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SCENARIOS ═══ -->
+  <section class="scenarios-section">
+    <div class="section-header">
+      <h2 class="section-title">Choose Your Scenario</h2>
+      <p class="section-sub">Each simulation builds real survival instinct</p>
+    </div>
+
+    <div class="scenarios-grid">
+
+      <a href="sim.html?scene=flood" class="scenario-card glass flood-card">
+        <div class="card-glow flood-glow"></div>
+        <div class="card-icon">🌊</div>
+        <div class="card-content">
+          <div class="card-title">Flash Flood</div>
+          <div class="card-desc">Rising water. Choose escape routes under pressure. 90-second survival window.</div>
+          <div class="card-tags">
+            <span class="tag">Rising Water</span>
+            <span class="tag">Evacuation</span>
+            <span class="tag">90s Timer</span>
+          </div>
+        </div>
+        <div class="card-difficulty">
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-label">Medium</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="sim.html?scene=fire" class="scenario-card glass fire-card">
+        <div class="card-glow fire-glow"></div>
+        <div class="card-icon">🔥</div>
+        <div class="card-content">
+          <div class="card-title">Forest Fire</div>
+          <div class="card-desc">Smoke fills the air. Find the exit route before fire spreads to your zone.</div>
+          <div class="card-tags">
+            <span class="tag">Smoke Particles</span>
+            <span class="tag">Exit Route</span>
+            <span class="tag">Spreading Fire</span>
+          </div>
+        </div>
+        <div class="card-difficulty">
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-label">Hard</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="sim.html?scene=quake" class="scenario-card glass quake-card">
+        <div class="card-glow quake-glow"></div>
+        <div class="card-icon">🏚️</div>
+        <div class="card-content">
+          <div class="card-title">Earthquake</div>
+          <div class="card-desc">Ground shakes. Buildings collapse. Drop — Cover — Hold. Every second counts.</div>
+          <div class="card-tags">
+            <span class="tag">Screen Shake</span>
+            <span class="tag">Drop Cover Hold</span>
+            <span class="tag">Siren Alert</span>
+          </div>
+        </div>
+        <div class="card-difficulty">
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-label">Hard</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="sim.html?scene=victim" class="scenario-card glass victim-card">
+        <div class="card-glow victim-glow"></div>
+        <div class="card-icon">♿</div>
+        <div class="card-content">
+          <div class="card-title">Victim POV</div>
+          <div class="card-desc">Experience disaster as an elderly person. Limited vision. Slow movement. 60 seconds.</div>
+          <div class="card-tags">
+            <span class="tag">Empathy Mode</span>
+            <span class="tag">Limited Vision</span>
+            <span class="tag">60s Only</span>
+          </div>
+        </div>
+        <div class="card-difficulty">
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-dot active"></span>
+          <span class="diff-label">Extreme</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══ FEATURES ═══ -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2 class="section-title">Built for Real Impact</h2>
+      <p class="section-sub">Features designed for NGOs, governments, schools and communities</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card glass">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">AI Survival Coach</div>
+        <div class="feature-desc">Real-time voice guidance after every decision. Explains why using UN/FEMA data.</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">📍</div>
+        <div class="feature-title">Local Risk Detection</div>
+        <div class="feature-desc">Live weather API detects your city's current flood and disaster risk level.</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">⏱️</div>
+        <div class="feature-title">90 Second Challenge</div>
+        <div class="feature-desc">Research proven: first 90 seconds determine survival. Train that exact window.</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">NGO Training Mode</div>
+        <div class="feature-desc">Community map lets users mark real danger zones. Crowdsourced disaster intelligence.</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">♿</div>
+        <div class="feature-title">Accessibility Mode</div>
+        <div class="feature-desc">Symbol-only interface. Zero language dependency. Works for any literacy level.</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">📶</div>
+        <div class="feature-title">Offline Rural Mode</div>
+        <div class="feature-desc">Full PWA. Works with zero internet. Designed for disaster zones where connectivity fails.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <span>🌊</span>
+      <span>VisualMind XR</span>
+    </div>
+    <div class="footer-links">
+      <a href="sim.html">Simulate</a>
+      <a href="map.html">Map</a>
+      <a href="debrief.html">Learn</a>
+    </div>
+    <div class="footer-note">
+      Built for humanity · Works offline · Free forever
+    </div>
+  </footer>
+
+</div><!-- end app -->
+
+<script src="app.js"></script>
+</body>
+</html>

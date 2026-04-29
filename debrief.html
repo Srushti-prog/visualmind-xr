@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SURVIVE — Learn & Prepare</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="debrief-wrap">
+
+  <h1>📚 Survival Guide</h1>
+  <p class="sub">What the 1% who survive disasters know</p>
+
+  <!-- Score history -->
+  <div class="tip-card" id="score-history" style="margin-bottom:32px;">
+    <h3>📊 Your Training History</h3>
+    <div id="history-list" style="color:#90CAF9;font-size:14px;">
+      No runs yet. Complete a simulation first.
+    </div>
+  </div>
+
+  <div class="tip-card">
+    <h3>🌊 Flood Rule #1</h3>
+    <p>Always move to HIGH GROUND immediately.
+       Never wait. Water rises faster than you think —
+       a 6-inch current can knock you down.</p>
+  </div>
+  <div class="tip-card">
+    <h3>🌉 Bridge Rule</h3>
+    <p>Never cross a bridge during flooding.
+       Even 2 inches of fast-moving water can sweep
+       a vehicle off a bridge. Turn around, don't drown.</p>
+  </div>
+  <div class="tip-card">
+    <h3>🏚️ Earthquake Rule #1</h3>
+    <p>DROP — Cover — Hold On. Get under a sturdy table.
+       Stay away from windows. Do not run outside during shaking.</p>
+  </div>
+  <div class="tip-card">
+    <h3>🔥 Fire Evacuation</h3>
+    <p>Stay LOW under smoke. Feel doors before opening.
+       Never use elevators. Meet at a pre-planned spot outside.</p>
+  </div>
+  <div class="tip-card">
+    <h3>⏱ The 90-Second Rule</h3>
+    <p>Research shows the first 90 seconds determine survival
+       in most disasters. Train your instincts NOW —
+       not when it happens.</p>
+  </div>
+  <div class="tip-card">
+    <h3>📦 Emergency Kit Checklist</h3>
+    <p>✅ Water (3 days supply) · ✅ Food (non-perishable)
+       · ✅ Flashlight · ✅ First aid · ✅ Whistle
+       · ✅ Phone charger · ✅ Cash · ✅ Documents copy</p>
+  </div>
+
+  <div style="margin-top:40px;">
+    <a href="sim.html" class="btn-start"
+       style="font-size:16px;padding:14px 36px;">
+       🔁 Train Again
+    </a>
+  </div>
+
+</div>
+<script>
+  // Show score history from localStorage
+  const history = JSON.parse(localStorage.getItem('scores') || '[]');
+  if (history.length > 0) {
+    document.getElementById('history-list').innerHTML =
+      history.slice(-5).reverse().map(h =>
+        `<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+          ${h.date} — <b>${h.grade}</b> — ${h.score} pts
+        </div>`
+      ).join('');
+  }
+</script>
+</body>
+</html>

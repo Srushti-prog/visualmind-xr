@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SURVIVE — Community Map</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+</head>
+<body style="background:#05051a;">
+
+<!-- Map fills screen -->
+<div id="map"></div>
+
+<!-- Legend -->
+<div class="map-legend">
+  <div style="font-weight:700;margin-bottom:10px;color:#90CAF9;">
+    🗺 Community Danger Map
+  </div>
+  <div>🔴 Danger Zone</div>
+  <div>🟢 Safe Zone</div>
+  <div>🔵 Shelter / Relief Camp</div>
+  <div>🟡 Evacuation Route</div>
+  <div style="margin-top:10px;color:#546E7A;font-size:11px;">
+    Click anywhere on map to mark a zone
+  </div>
+</div>
+
+<!-- Back button -->
+<a href="index.html"
+   style="position:fixed;top:16px;left:16px;z-index:1000;
+          background:rgba(5,5,26,0.9);color:#90CAF9;
+          padding:10px 18px;border-radius:50px;
+          text-decoration:none;font-size:13px;
+          border:1px solid rgba(33,150,243,0.3);">
+  ← Back
+</a>
+
+<script>
+  // Initialize map centered on India
+  const map = L.map('map', {
+    center: [20.5937, 78.9629],
+    zoom: 5,
+    zoomControl: true
+  });
+
+  // Dark tile layer
+  L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    { attribution: '© CartoDB · © OpenStreetMap' }
+  ).addTo(map);
+
+  // Zone config
+  const zoneConfig = {
+    'DANGER':    { color: '#EF5350', emoji: '🔴', label: 'Danger Zone' },
+    'SAFE':      { color: '#66BB6A', emoji: '🟢', label: 'Safe Zone' },
+    'SHELTER':   { color: '#42A5F5', emoji: '🔵', label: 'Shelter' },
+    'EVACUATE':  { color: '#FFD54F', emoji: '🟡', label: 'Evacuation Route' }
+  };
+
+  // Load saved zones
+  const zones = JSON.parse(
+    localStorage.getItem('communityZones') || '[]'
+  );
+  zones.forEach(z => addMarker(z.lat, z.lng, z.type));
+
+  // Click to add zone
+  map.on('click', (e) => {
+    const type = prompt(
+      "Mark this location as:\n" +
+      "1. DANGER\n2. SAFE\n3. SHELTER\n4. EVACUATE\n\n" +
+      "Type one of the above:"
+    );
+    if (!type) return;
+    const t = type.toUpperCase().trim();
+    if (!zoneConfig[t]) { alert('Invalid type. Use DANGER/SAFE/SHELTER/EVACUATE'); return; }
+
+    addMarker(e.latlng.lat, e.latlng.lng, t);
+    zones.push({ lat: e.latlng.lat, lng: e.latlng.lng, type: t });
+    localStorage.setItem('communityZones', JSON.stringify(zones));
+  });
+
+  function addMarker(lat, lng, type) {
+    const cfg = zoneConfig[type] || zoneConfig['DANGER'];
+    const icon = L.divIcon({
+      html: `<div style="font-size:24px;line-height:1">
+               ${cfg.emoji}
+             </div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      className: ''
+    });
+    L.marker([lat, lng], {icon})
+     .addTo(map)
+     .bindPopup(
+       `<b style="color:${cfg.color}">${cfg.label}</b>
+        <br><small>Added by community member</small>`
+     );
+  }
+
+  // Auto-center on user location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      map.setView([pos.coords.latitude, pos.coords.longitude], 12);
+    });
+  }
+</script>
+</body>
+</html>
